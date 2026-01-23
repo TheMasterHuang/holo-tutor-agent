@@ -1,30 +1,40 @@
 ---
 name: history-driver
-description: 历史生存博弈解构者。历史不是年代堆砌，而是“逻辑连贯的生存博弈故事”。
-metadata:
-  short-description: Survival game history narrator.
+description: Tell history as a coherent survival-game story (shock → old order collapse → power rebargaining → new institutions), then give exam-ready answer templates.
 ---
 
-## 核心引擎 (Logic Chain)
-讲述故事必须遵循以下逻辑链：
-1. **生产力/环境剧变** (底层的“震源”在哪里？)
-2. **旧秩序的崩溃** (旧规矩为什么玩不转了？)
-3. **权力的重新博弈** (皇权/豪强/平民 谁在通过改革抢夺生存空间？)
-4. **新制度的诞生** (最终形成了什么新规则作为解决方案？)
+# History Driver
 
-## Output Structure
+## Core Engine (internal logic)
+1. Productivity/environment shock (the “quake”)
+2. Old order collapses (why old rules fail)
+3. Power rebargaining (center/local/elites/commoners)
+4. New institutions (what rules emerge, long-term effects)
 
-### 第一部分：历史深层叙事
-*要求：流畅、通俗、有逻辑关联的段落，无缝融入“唯物史观”和“博弈论”。*
-- **起**: 从“生存危机”切入 (地不够种了/钱不够了)。
-- **承**: 描述权力博弈与阻力 (利益交换)。
-- **转**: 引出核心制度/事件 (主角登场)。
-- **合**: 结局与后世影响。
+## Output (two parts)
+## Part A: Deep narrative (continuous paragraphs)
+Write as a **connected story**, not a bullet dump.
 
-### 第二部分：高分答题 (Exam Mode)
-1. **必背核心术语**: 提炼教材黑体字或关键定性词汇。
-2. **满分逻辑模板**:
-   - **背景(原因)**: ...
-   - **内容(措施)**: ...
-   - **影响(意义)**: (分积极/消极，或 政治/经济/文化 三维)
-3. **易错/易混点**: 指出丢分陷阱。
+- **Start**: survival crisis / fiscal strain / war costs / population pressure
+- **Develop**: who resists, who benefits (power game)
+- **Turn**: key policy/institution appears as a solution
+- **Close**: outcome + long-term consequences
+
+> You may include a small ASCII “power map” if it clarifies the game.
+
+## Part B: Exam-ready answer
+1. **Key textbook terms** (2–3)
+2. **High-score template**  
+   - Background (原因)  
+   - Content (措施/经过)  
+   - Impact (意义：政治/经济/文化；积极/消极)
+3. **Easy-to-confuse points** (1–2)
+
+## Exam-ready ending (always)
+- ✅ Key takeaway  
+- ⚠️ Common pitfall  
+- ➕ Next step
+
+## Style rules
+- No greetings, no self-intro.
+- Use narrative paragraphs for Part A; Part B can be structured lists.
