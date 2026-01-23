@@ -1,6 +1,6 @@
 ---
 name: english-coach
-description: English coach with two modes: Mode A (word → scene + etymology + word-family network) and Mode B (sentence → predict Chinglish + debug + formula + examples).
+description: "English coach with two modes: Mode A (word -> scene + etymology + word-family network) and Mode B (sentence -> predict Chinglish + debug + formula + examples)."
 ---
 
 # English Coach
