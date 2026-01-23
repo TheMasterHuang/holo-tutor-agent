@@ -1,49 +1,44 @@
 ---
 name: subject-router
-description: Decide which tutoring subject skill to use when the user request is ambiguous, mixed, or unclear. Output the selected skill and a 1-line handoff instruction.
-metadata:
-  short-description: Route tutoring requests to the right skill.
+description: 将用户问题路由到最合适的学科技能；如需可在同一回复中按该技能的输出协议继续作答
 ---
 
-## Goal
-Choose the best skill(s) for the user’s request with minimal friction.
+## 目标
+- 在**不寒暄、不自我介绍**的前提下，快速判断用户问题属于哪个学科/任务类型。
+- 优先选择一个最匹配的技能；如存在明显交叉，再给 1 个相关技能作为备选。
+- 当用户只想“问清楚怎么解释/怎么做题”，你可以在路由后**直接继续作答**（按被选技能的输出协议）。
 
-## Inputs (assume if missing)
-- User request text
-- Optional: grade/level, goal (understand vs exam), provided data/passage/problem
+## 路由规则（按优先级）
+1) **语文精读 / 文本解析**：用户给出文章/诗歌/散文/阅读题，或说“逐段精读、逆向工程、赏析、批注”
+→ `chinese-close-reading`
 
-## Routing Heuristics
-- “本质/站在更高处/学科是什么/底层骨架/框架” → discipline-architect
-- Geography keywords: 气压带风带、洋流、地形、气候、季风、锋面、圈层、尺度 → geo-driver
-- Chemistry keywords: 反应方程式、氧化还原、离子、摩尔、平衡、酸碱、周期表 → chem-driver
-- History keywords: 变法、制度、革命、国家治理、朝代更替、影响意义、背景措施 → history-driver
-- English keywords: 单词怎么记、词根词缀、翻译、造句、改 Chinglish → english-coach
-- Biology keywords: 细胞、膜、酶、光合呼吸、遗传、稳态、生态 → biology-tutor
-- Chinese keywords: 课文精读、逐段分析、小说/议论文/诗歌散文、作者意图 → chinese-close-reading
-- Physics keywords: 力学、电磁、能量、动量、圆周、题目求解、建模 → physics-first-principles
+2) **英语学习**：单词、词根词缀、造句、翻译、纠错、语法、同义替换
+→ `english-coach`
 
-## Allowed skills (MUST choose one)
-The Selected skill MUST be exactly one of:
-- discipline-architect
-- geo-driver
-- chem-driver
-- history-driver
-- english-coach
-- biology-tutor
-- chinese-close-reading
-- physics-first-principles
+3) **历史**：历史事件/制度/人物/史料材料题/“为什么…导致…”
+→ `history-driver`
 
-NEVER select: subject-router
-If unclear: select discipline-architect.
+4) **地理**：大气/海陆风/环流/气候/地貌/水文/人地关系等自然地理机制题
+→ `geo-driver`
 
-## Output Format (ABSOLUTELY STRICT)
-Output MUST contain ONLY the 3 lines below.
-- Do NOT output any other text before or after.
-- Do NOT output bullets (no "•", "-", "*").
-- Do NOT output headings, markdown, or explanations.
+5) **化学**：电解质/反应机理/方程式/摩尔/溶液/电化学等
+→ `chem-driver`
 
-Selected skill: <one allowed skill>
-Assumption: <short sentence or "none">
-Handoff: <one-line instruction to the selected skill>
+6) **生物**：细胞/遗传/稳态/代谢/调节/生态等
+→ `biology-tutor`
 
+7) **物理**：力学/电磁/热学/光学/波动/题目计算，或“用第一性原理推导”
+→ `physics-first-principles`
 
+8) **学科架构 / 元问题**：用户想“这门学科到底在解决什么”“如何搭知识体系/学习路径”
+→ `discipline-architect`
+
+## 输出格式（先路由，后可继续作答）
+先输出 3 行路由信息（固定格式）：
+- Selected skill: <skill-name>
+- Assumption: <一句话：受众/难度/是否按考试表达>
+- Handoff: <把用户问题原样复述一遍>
+
+然后：
+- 若问题清晰且无需补充信息：**继续输出完整解答**，并严格遵循 `Selected skill` 对应技能的输出结构。
+- 若缺关键条件（题干不全/缺文本/缺已知量）：只提 1 个最关键补充信息问题，然后停下等待。
