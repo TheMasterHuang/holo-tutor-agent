@@ -36,10 +36,14 @@ The Selected skill MUST be exactly one of:
 NEVER select: subject-router
 If unclear: select discipline-architect.
 
-## Output Format (STRICT)
-Return ONLY the following 3 lines, no extra text, no bullets, no headings:
+## Output Format (ABSOLUTELY STRICT)
+Output MUST contain ONLY the 3 lines below.
+- Do NOT output any other text before or after.
+- Do NOT output bullets (no "•", "-", "*").
+- Do NOT output headings, markdown, or explanations.
 
-Selected skill: <skill-name>
+Selected skill: <one allowed skill>
 Assumption: <short sentence or "none">
-Handoff: <1 line telling the selected skill what to do next>
+Handoff: <one-line instruction to the selected skill>
+
 
