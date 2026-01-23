@@ -1,44 +1,33 @@
 ---
 name: subject-router
-description: 将用户问题路由到最合适的学科技能；如需可在同一回复中按该技能的输出协议继续作答
+description: Route the user request to the most suitable subject skill; optionally continue answering using the selected driver’s format.
 ---
 
-## 目标
-- 在**不寒暄、不自我介绍**的前提下，快速判断用户问题属于哪个学科/任务类型。
-- 优先选择一个最匹配的技能；如存在明显交叉，再给 1 个相关技能作为备选。
-- 当用户只想“问清楚怎么解释/怎么做题”，你可以在路由后**直接继续作答**（按被选技能的输出协议）。
+# Subject Router
 
-## 路由规则（按优先级）
-1) **语文精读 / 文本解析**：用户给出文章/诗歌/散文/阅读题，或说“逐段精读、逆向工程、赏析、批注”
-→ `chinese-close-reading`
+## Purpose
+- Route the request to **one** best-matching subject driver.
+- If the user explicitly invokes `$subject-router`, **first print routing lines**, then:
+  - If the question is clear: you may continue with the selected driver’s full answer format.
+  - If key info is missing: ask **one** most important clarifying question and stop.
 
-2) **英语学习**：单词、词根词缀、造句、翻译、纠错、语法、同义替换
-→ `english-coach`
+## Routing Rules (priority)
+1. Chinese close reading / text analysis / 阅读题 / “逐段精读、赏析、批注” → `chinese-close-reading`
+2. English vocab / translation / sentence making / correction → `english-coach`
+3. History events / institutions / material-based questions → `history-driver`
+4. Geography (atmosphere/circulation/climate/landform/hydrology, local circulation like sea-land breeze) → `geo-driver`
+5. Chemistry (electrolyte/reaction/mole/solution/redox/electrochemistry) → `chem-driver`
+6. Biology (cell/genetics/homeostasis/ecology/metabolism) → `biology-tutor`
+7. Physics (mechanics/EM/thermo/optics/waves/quantitative problems/first-principles) → `physics-first-principles`
+8. Meta “what is the essence/framework/learning path” → `discipline-architect`
 
-3) **历史**：历史事件/制度/人物/史料材料题/“为什么…导致…”
-→ `history-driver`
+## Output (Routing Lines)
+When invoked as `$subject-router ...`, print exactly the following 3 lines first:
 
-4) **地理**：大气/海陆风/环流/气候/地貌/水文/人地关系等自然地理机制题
-→ `geo-driver`
+- `Selected skill: <skill-name>`
+- `Assumption: <one short sentence or "none">`
+- `Handoff: <repeat the user question in one line>`
 
-5) **化学**：电解质/反应机理/方程式/摩尔/溶液/电化学等
-→ `chem-driver`
-
-6) **生物**：细胞/遗传/稳态/代谢/调节/生态等
-→ `biology-tutor`
-
-7) **物理**：力学/电磁/热学/光学/波动/题目计算，或“用第一性原理推导”
-→ `physics-first-principles`
-
-8) **学科架构 / 元问题**：用户想“这门学科到底在解决什么”“如何搭知识体系/学习路径”
-→ `discipline-architect`
-
-## 输出格式（先路由，后可继续作答）
-先输出 3 行路由信息（固定格式）：
-- Selected skill: <skill-name>
-- Assumption: <一句话：受众/难度/是否按考试表达>
-- Handoff: <把用户问题原样复述一遍>
-
-然后：
-- 若问题清晰且无需补充信息：**继续输出完整解答**，并严格遵循 `Selected skill` 对应技能的输出结构。
-- 若缺关键条件（题干不全/缺文本/缺已知量）：只提 1 个最关键补充信息问题，然后停下等待。
+Then follow the continuation rule:
+- If clear: continue **using the selected skill’s output structure**.
+- If unclear: ask **one** clarifying question and stop.
