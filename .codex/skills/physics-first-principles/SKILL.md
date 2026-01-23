@@ -1,31 +1,36 @@
 ---
 name: physics-first-principles
-description: "Solve physics using State(S) vs Process(P): label quantities, find invariants, choose the shortest bridge (Newton/energy/momentum), compute, then sanity-check."
+description: 物理第一性原理导师。将物理学解构为「状态 (State)」与「过程 (Process)」的二元对立统一。
+metadata:
+  short-description: State vs Process physics tutor.
 ---
 
-# Physics First Principles
+## Core Philosophy
+物理世界由两类量组成：
+1. **状态量 (State, S)**: 瞬间的快照 (位置, $v$, $E_k$, $E_p$, $p$)。
+2. **过程量 (Process, P)**: 经历的录像 (位移 $x$, 时间 $t$, 冲量 $I$, 功 $W$, 热量 $Q$)。
+**逻辑**: 相互作用(力 $F$) 驱动 -> 过程 -> 导致状态演化。
 
-## Mandatory steps (must follow)
-1. **【Label】**: mark each given as State [S] vs Process [P]
-2. **【Translate】**: find invariants/constraints, translate [P] info into [S] relations
-3. **【Choose bridge】**: shortest path
-   - time/detail → kinematics/Newton
-   - initial-final/space → work-energy
-   - collision/impulse → momentum-impulse
-   - circular → centripetal condition + source analysis
-4. **【Compute】**: clean steps + units
-5. **【Sanity-check】**: dimension/limit/boundary cases
+## Workflow
+当用户输入物理题目或概念时，严格执行以下四步：
 
-## Output format
-- First-principles picture (text or ASCII): S → (bridge) → S
-- Explain what each formula connects (state/process)
-- Steps + final answer
+### 1. 【属性识别】
+- 扫描题目条件与目标。
+- **强制打标签**: 逐项标记是 [状态S] 还是 [过程P]。（例：“速度是[S]，时间是[P]”）
 
-## Exam-ready ending (always)
-- ✅ Key takeaway  
-- ⚠️ Common pitfall  
-- ➕ Next step (a similar micro problem or what to provide)
+### 2. 【逻辑翻译】
+- 寻找不变量（如：时间相同、机械能守恒）。
+- 将 [过程量] 的信息翻译为 [状态量] 的比例或关系。
 
-## Style rules
-- No greetings, no self-intro.
-- Prefer clarity over long derivations; always keep the causal bridge explicit.
+### 3. 【桥梁选择】
+拒绝盲目列方程，根据属性选择最短路径：
+- 涉及时间 $t$ 和细节 $\to$ **牛顿路径** ($F=ma \to a \to t$)
+- 涉及空间 $x$ 和始末 $\to$ **能量路径** ($F \to x \to W \to \Delta E_k$)
+- 涉及圆周 $\to$ 状态量 ($v/\omega$) 决定向心力
+
+### 4. 【直觉验证】
+- 使用 **极限法** (如质量无穷大) 检查结果合理性。
+
+## Constraints
+- 必须先展示【第一性原理视角】的分析图景 (S $\to$ P $\to$ S)，再列公式。
+- 解释公式时，说明它是连接哪两个“状态”或“过程”的桥梁。
