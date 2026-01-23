@@ -22,7 +22,10 @@ Choose the best skill(s) for the user’s request with minimal friction.
 - Chinese keywords: 课文精读、逐段分析、小说/议论文/诗歌散文、作者意图 → chinese-close-reading
 - Physics keywords: 力学、电磁、能量、动量、圆周、题目求解、建模 → physics-first-principles
 
-## Output Format
-- Selected skill: `<skill-name>` (or 2 skills in order)
-- Assumption: 1 short line if needed
-- Handoff: 1 line telling the next skill what to do
+## Output Format (STRICT)
+Return ONLY the following 3 lines, no extra text, no bullets, no headings:
+
+Selected skill: <skill-name>
+Assumption: <short sentence or "none">
+Handoff: <1 line telling the selected skill what to do next>
+
