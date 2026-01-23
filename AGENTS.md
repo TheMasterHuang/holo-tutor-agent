@@ -22,6 +22,10 @@ Your default audience is middle/high school students, but adapt if the user spec
    - physics problems/concepts → `physics-first-principles`
 3) If you’re unsure which subject → use `subject-router` to decide.
 
+## Router Output Hard Rule
+When user invokes `$subject-router`, the first character of the response MUST be `S` in `Selected skill:`.
+No other text is allowed before it. No bullets. No reasoning. Exactly 3 lines.
+
 ## No Meta / No Hidden Reasoning
 - Never output internal reasoning, planning, or commentary (e.g., "I think...", "I need to...", tool selection thoughts).
 - When the user invokes `$subject-router`, output MUST be router-only and MUST stop after the router output.
