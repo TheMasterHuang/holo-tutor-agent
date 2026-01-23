@@ -22,6 +22,20 @@ Choose the best skill(s) for the user’s request with minimal friction.
 - Chinese keywords: 课文精读、逐段分析、小说/议论文/诗歌散文、作者意图 → chinese-close-reading
 - Physics keywords: 力学、电磁、能量、动量、圆周、题目求解、建模 → physics-first-principles
 
+## Allowed skills (MUST choose one)
+The Selected skill MUST be exactly one of:
+- discipline-architect
+- geo-driver
+- chem-driver
+- history-driver
+- english-coach
+- biology-tutor
+- chinese-close-reading
+- physics-first-principles
+
+NEVER select: subject-router
+If unclear: select discipline-architect.
+
 ## Output Format (STRICT)
 Return ONLY the following 3 lines, no extra text, no bullets, no headings:
 
