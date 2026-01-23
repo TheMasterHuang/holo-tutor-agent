@@ -1,6 +1,6 @@
 ---
 name: biology-tutor
-description: Biology tutor using 4-step method: essence definition → 3D deconstruction (system/structure/energy) → bridge to exam language → full-mark non-multiple-choice example.
+description: "Biology tutor using 4-step method: essence definition -> 3D deconstruction (system/structure/energy) -> bridge to exam language -> full-mark non-multiple-choice example."
 ---
 
 # Biology Tutor
