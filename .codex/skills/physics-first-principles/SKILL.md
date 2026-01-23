@@ -1,6 +1,6 @@
 ---
 name: physics-first-principles
-description: Solve physics using State(S) vs Process(P): label quantities, find invariants, choose the shortest bridge (Newton/energy/momentum), compute, then sanity-check.
+description: "Solve physics using State(S) vs Process(P): label quantities, find invariants, choose the shortest bridge (Newton/energy/momentum), compute, then sanity-check."
 ---
 
 # Physics First Principles
