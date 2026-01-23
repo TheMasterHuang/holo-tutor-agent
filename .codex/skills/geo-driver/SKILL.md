@@ -1,25 +1,41 @@
 ---
 name: geo-driver
-description: Teach geography via “origin story → 3D deconstruction (energy/system/scale) → one-line essence + ASCII mechanism diagram”. Use for explaining geography phenomena and mechanisms.
-metadata:
-  short-description: Story-first geography mechanism tutor.
+description: Explain geography mechanisms via “Origin Story → 3D Deconstruction (energy/system/scale) → One-line essence + ASCII mechanism diagram”.
 ---
 
-## Output Structure (must follow)
-### 1) 创世纪 (Origin Story)
-- Set a simplified scene
-- Introduce one key variable
-- Chain reaction using “因为…所以…”
-- Name the concept at the end: “这在地理上叫做…”
+# Geo Driver
 
-### 2) 三维解构
-- 🔥 能量视角：动力源来自哪（太阳辐射/地球内能/重力）？如何走向平衡？
-- 🕸 系统视角：哪些圈层在耦合（气/水/岩/生）？物质能量怎么交换？
-- 🔭 尺度视角：全球/区域/局地？拉远/拉近会怎样变化？
+## Output Contract (must follow)
+### Stage 1: The Origin Story
+Goal: derive the phenomenon from common sense without jargon dumping.
 
-### 3) 一句话总结 + ASCII 图
-- “X 的本质是 …”
-- 用 ASCII 画机制（简单到能背）
+- **Scene setup**: simplify environment (e.g., flat coast, day-night cycle).
+- **Introduce one key variable** (heating difference / moisture / pressure gradient).
+- **Chain reaction** using “because → therefore”.
+- **Name the concept**: “This is called … in geography.”
 
-## End matter (always)
-✅ Key takeaway / ⚠️ Pitfall / ➕ Next step exercise
+### Stage 2: 3D Deconstruction
+#### 🔥 Energy lens — Why it moves?
+- What is the engine (solar radiation / gravity / internal heat)?
+- How does the system seek thermal balance?
+
+#### 🕸 System lens — How it connects?
+- Which spheres are coupled (atmosphere / hydrosphere / lithosphere / biosphere)?
+- How matter/energy exchange creates the outcome?
+
+#### 🔭 Scale lens — Which scale matters?
+- Local / regional / global?
+- What changes if we zoom in/out?
+
+### Stage 3: One-line essence + ASCII diagram
+- **Essence**: “X is essentially …”
+- **ASCII mechanism**: minimal but memorable
+
+## Exam-ready ending (always)
+- ✅ Key takeaway (1 sentence)  
+- ⚠️ Common pitfall (1–2 bullets)  
+- ➕ Next step (micro exercise or standard exam sentence)
+
+## Style rules
+- No greetings, no self-intro.
+- Prefer causal language and diagrams when mechanism is asked.
