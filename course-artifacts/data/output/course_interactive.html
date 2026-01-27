@@ -1,0 +1,626 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>抛物线方程（y=ax²+bx+c）</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #667085;
+      --border: rgba(0,0,0,.06);
+      --shadow: 0 6px 18px rgba(0,0,0,.06);
+      --brand: #2563eb;
+    }
+
+    body {
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      position: relative;
+    }
+
+    /* Watermark */
+    body::before {
+      content: "holo-tutor-agent";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      font-size: 28px;
+      transform: rotate(-22deg);
+      display: grid;
+      place-items: center;
+      background-image:
+        repeating-linear-gradient(
+          -22deg,
+          rgba(0,0,0,0.12) 0,
+          rgba(0,0,0,0.12) 2px,
+          transparent 2px,
+          transparent 140px
+        );
+      mix-blend-mode: multiply;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 26px auto;
+      padding: 0 16px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 30px;
+      letter-spacing: 0.2px;
+    }
+
+    .meta {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      margin: 16px 0;
+    }
+
+    .card-title {
+      margin: 0 0 12px 0;
+      font-size: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+    }
+    @media(max-width: 960px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .chart-wrap {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .controls .ctrl {
+      margin-bottom: 14px;
+    }
+    .ctrl-row {
+      display:flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+    .ctrl-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .ctrl-val {
+      font-weight: 700;
+      color: var(--brand);
+      font-variant-numeric: tabular-nums;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .hint {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      margin: 14px 0;
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 14px 16px;
+      font-weight: 700;
+      list-style: none;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    summary::-webkit-details-marker { display:none; }
+    .caret { color: var(--muted); font-weight: 900; }
+
+    .section-body {
+      padding: 0 16px 16px 16px;
+      color: #111827;
+      line-height: 1.6;
+    }
+    .section-body p { margin: 8px 0; }
+    .p-spacer { height: 10px; }
+    .section-body ul { margin: 8px 0 8px 22px; }
+
+    pre.code {
+      background: #0b1220;
+      color: #e5e7eb;
+      padding: 12px;
+      border-radius: 12px;
+      overflow:auto;
+    }
+
+    /* Visuals */
+    .viz-card {
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:16px;
+      margin:16px 0;
+      box-shadow: var(--shadow);
+    }
+    .viz-title { font-size:18px; font-weight:800; margin-bottom:4px; }
+    .viz-caption { color: var(--muted); font-size:13px; margin-bottom:10px; }
+    .viz-body { overflow:auto; }
+    .viz-src pre {
+      white-space: pre-wrap;
+      background: #0b1220;
+      color: #e5e7eb;
+      padding: 12px;
+      border-radius: 12px;
+      overflow:auto;
+    }
+    .warn {
+      background: #fff7ed;
+      border: 1px solid rgba(249,115,22,.25);
+      color: #7c2d12;
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    /* plot canvas */
+    .plot-canvas {
+      width: 100%;
+      height: 360px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      display: block;
+    }
+
+    /* flip cards */
+    .flip-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+    }
+    .flip-card {
+      perspective:1000px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .flip-inner {
+      position:relative;
+      width:100%;
+      min-height:170px;
+      transform-style:preserve-3d;
+      transition:transform .5s;
+    }
+    .flip-card.flipped .flip-inner { transform:rotateY(180deg); }
+    .flip-front,.flip-back {
+      position:absolute; inset:0;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      backface-visibility:hidden;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .flip-front { background:#f8fafc; }
+    .flip-back { background:#eef6ff; transform:rotateY(180deg); }
+    .flip-label { font-weight:800; color:#1f2937; }
+    .flip-text { font-size:14px; color:#111827; line-height:1.45; margin-top:8px; flex:1; }
+    .flip-tip { font-size:12px; color: var(--muted); margin-top:12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <h1>抛物线方程（y=ax²+bx+c）</h1>
+      <div class="meta">生成时间：2026-01-27 ｜ Watermark: holo-tutor-agent</div>
+    </div>
+
+    
+        <div class="card">
+          <h2 class="card-title">交互可视化： y = ax² + bx + c</h2>
+          <div class="grid-2">
+            <div class="chart-wrap">
+              <canvas id="parabolaCanvas" width="860" height="420" data-interactive="{&quot;type&quot;: &quot;parabola_quadratic&quot;, &quot;domain&quot;: {&quot;x_min&quot;: -10.0, &quot;x_max&quot;: 10.0}, &quot;range&quot;: {&quot;y_min&quot;: -10.0, &quot;y_max&quot;: 10.0}, &quot;params&quot;: {&quot;a&quot;: {&quot;min&quot;: -5.0, &quot;max&quot;: 5.0, &quot;step&quot;: 0.01, &quot;default&quot;: 1.5}, &quot;b&quot;: {&quot;min&quot;: -10.0, &quot;max&quot;: 10.0, &quot;step&quot;: 0.01, &quot;default&quot;: -2.0}, &quot;c&quot;: {&quot;min&quot;: -10.0, &quot;max&quot;: 10.0, &quot;step&quot;: 0.01, &quot;default&quot;: 1.0}}, &quot;plot_config&quot;: {&quot;samples&quot;: 800, &quot;grid&quot;: true}, &quot;features&quot;: {&quot;show_vertex&quot;: true, &quot;show_axis&quot;: true, &quot;show_intercepts&quot;: false}}"></canvas>
+            </div>
+            <div class="controls">
+              <div class="ctrl">
+                <div class="ctrl-row">
+                  <div class="ctrl-label">二次项系数 a：</div>
+                  <div class="ctrl-val" id="valA">1.50</div>
+                </div>
+                <input type="range" id="sliderA" min="-5.0" max="5.0" step="0.01" value="1.5">
+              </div>
+
+              <div class="ctrl">
+                <div class="ctrl-row">
+                  <div class="ctrl-label">一次项系数 b：</div>
+                  <div class="ctrl-val" id="valB">-2.00</div>
+                </div>
+                <input type="range" id="sliderB" min="-10.0" max="10.0" step="0.01" value="-2.0">
+              </div>
+
+              <div class="ctrl">
+                <div class="ctrl-row">
+                  <div class="ctrl-label">常数项 c：</div>
+                  <div class="ctrl-val" id="valC">1.00</div>
+                </div>
+                <input type="range" id="sliderC" min="-10.0" max="10.0" step="0.01" value="1.0">
+              </div>
+
+              <div class="hint">
+                拖动滑块调整系数，观察抛物线的开口方向、顶点位置与整体平移变化。
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+    
+
+    
+        <details class="section" open>
+          <summary><span class="caret">▼</span> Part 1：定义与图像</summary>
+          <div class="section-body" id="part1">
+            <p>二次函数 y = ax² + bx + c（a≠0）的图像是一条抛物线。</p>
+<div class='p-spacer'></div>
+<ul>
+<li>a 控制开口方向与“胖瘦”（|a|越大越窄）</li>
+<li>b 控制对称轴位置</li>
+<li>c 控制整体上下平移（y 轴截距）</li>
+</ul>
+          </div>
+        </details>
+        
+
+        <details class="section" open>
+          <summary><span class="caret">▼</span> Part 2：关键性质与公式</summary>
+          <div class="section-body" id="part2">
+            <p>对称轴：x = -b/(2a)</p>
+<div class='p-spacer'></div>
+<p>顶点：V(h, k)，其中 h = -b/(2a)，k = (4ac-b²)/(4a)</p>
+<div class='p-spacer'></div>
+<p>判别式：Δ = b² - 4ac</p>
+<div class='p-spacer'></div>
+<ul>
+<li>Δ&gt;0：与 x 轴有两个交点</li>
+<li>Δ=0：与 x 轴相切（一个交点）</li>
+<li>Δ&lt;0：与 x 轴无交点</li>
+</ul>
+          </div>
+        </details>
+        
+
+        <details class="section" open>
+          <summary><span class="caret">▼</span> Part 3：配方法（一般式→顶点式）</summary>
+          <div class="section-body" id="part3">
+            <p>一般式：y = ax² + bx + c</p>
+<div class='p-spacer'></div>
+<p>顶点式：y = a(x-h)² + k</p>
+<div class='p-spacer'></div>
+<p>配方法思路：</p>
+<div class='p-spacer'></div>
+<pre class='code'><code>ax²+bx+c
+= a(x²+(b/a)x)+c
+= a[(x+b/2a)²-(b/2a)²]+c
+= a(x+b/2a)² + (4ac-b²)/(4a)</code></pre>
+          </div>
+        </details>
+        
+
+        <details class="section" open>
+          <summary><span class="caret">▼</span> Part 4：典型应用</summary>
+          <div class="section-body" id="part4">
+            <ul>
+<li>已知三点求二次函数：代入得到方程组求 a,b,c</li>
+<li>已知顶点与一点求函数：用顶点式 y=a(x-h)²+k</li>
+<li>最值问题：当 a&gt;0 取最小值 k；当 a&lt;0 取最大值 k</li>
+</ul>
+          </div>
+        </details>
+        
+  </div>
+
+  <!-- Mermaid (optional). If unavailable/offline, visuals still show source. -->
+  <script>
+    (function initMermaidIfPresent(){
+      const hasMermaid = document.querySelector(".mermaid");
+      if(!hasMermaid) return;
+
+      function init(){
+        if(!window.mermaid) return;
+        try {
+          window.mermaid.initialize({ startOnLoad: true, theme: "default" });
+        } catch(e) {}
+      }
+
+      if(window.mermaid) { init(); return; }
+
+      // Load local asset if provided (no CDN dependency by default).
+      const s = document.createElement("script");
+      s.src = "assets/mermaid.min.js";
+      s.onload = init;
+      s.onerror = function(){ /* keep source text */ };
+      document.head.appendChild(s);
+    })();
+  </script>
+
+  <script>
+    // --------- Plot renderer (visuals type=plot) ----------
+    function drawPlotCanvas(canvas){
+      const payload = canvas.getAttribute("data-plot");
+      if(!payload) return;
+
+      let data;
+      try{ data = JSON.parse(payload); }catch(e){ return; }
+
+      const series = (data.series || []);
+      if(series.length === 0) return;
+
+      // set real pixels based on CSS size for crisp lines
+      const cssW = canvas.clientWidth || 800;
+      const cssH = canvas.clientHeight || 360;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(cssW * dpr);
+      canvas.height = Math.floor(cssH * dpr);
+
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      ctx.clearRect(0,0,cssW,cssH);
+
+      // bounds
+      let xmin=Infinity,xmax=-Infinity,ymin=Infinity,ymax=-Infinity;
+      series.forEach(s=>{
+        (s.x||[]).forEach(v=>{ xmin=Math.min(xmin,v); xmax=Math.max(xmax,v); });
+        (s.y||[]).forEach(v=>{ ymin=Math.min(ymin,v); ymax=Math.max(ymax,v); });
+      });
+      if(!isFinite(xmin)||!isFinite(ymin)) return;
+      if(xmin===xmax) xmax=xmin+1;
+      if(ymin===ymax) ymax=ymin+1;
+
+      const pad=42;
+      const X = x=> pad + (x-xmin)*(cssW-2*pad)/(xmax-xmin);
+      const Y = y=> cssH-pad - (y-ymin)*(cssH-2*pad)/(ymax-ymin);
+
+      // axes
+      ctx.globalAlpha = 0.9;
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(0,0,0,0.25)";
+      ctx.beginPath();
+      ctx.moveTo(pad, pad);
+      ctx.lineTo(pad, cssH-pad);
+      ctx.lineTo(cssW-pad, cssH-pad);
+      ctx.stroke();
+
+      // labels
+      ctx.fillStyle = "rgba(0,0,0,0.65)";
+      ctx.font = "12px sans-serif";
+      ctx.fillText(data.y_label || "y", 10, pad);
+      ctx.fillText(data.x_label || "x", cssW-pad+10, cssH-pad+4);
+
+      // draw series
+      ctx.strokeStyle = "#2563eb";
+      ctx.lineWidth = 2;
+
+      series.forEach(s=>{
+        const xs = s.x||[], ys=s.y||[];
+        ctx.beginPath();
+        for(let i=0;i<Math.min(xs.length, ys.length);i++) {
+          const cx = X(xs[i]);
+          const cy = Y(ys[i]);
+          if(i===0) ctx.moveTo(cx,cy); else ctx.lineTo(cx,cy);
+        }
+        ctx.stroke();
+      });
+    }
+
+    document.querySelectorAll("canvas[data-plot]").forEach(drawPlotCanvas);
+
+
+    // --------- Interactive parabola module (data-driven) ----------
+    (function initParabolaIfPresent(){
+      const canvas = document.getElementById("parabolaCanvas");
+      const sa = document.getElementById("sliderA");
+      const sb = document.getElementById("sliderB");
+      const sc = document.getElementById("sliderC");
+      if(!canvas || !sa || !sb || !sc) return;
+
+      let cfg = {};
+      try {
+        cfg = JSON.parse(canvas.getAttribute("data-interactive") || "{}") || {};
+      } catch(e) {
+        cfg = {};
+      }
+
+      const xMin = Number(cfg?.domain?.x_min ?? -10);
+      const xMax = Number(cfg?.domain?.x_max ?? 10);
+      const yMin = Number(cfg?.range?.y_min ?? -10);
+      const yMax = Number(cfg?.range?.y_max ?? 10);
+      const samples = Math.max(10, parseInt(cfg?.plot_config?.samples ?? 800, 10));
+      const grid = Boolean(cfg?.plot_config?.grid ?? true);
+      const showVertex = Boolean(cfg?.features?.show_vertex ?? true);
+      const showAxis = Boolean(cfg?.features?.show_axis ?? true);
+      const showIntercepts = Boolean(cfg?.features?.show_intercepts ?? false);
+
+      const cssW = canvas.clientWidth || canvas.width || 860;
+      const cssH = canvas.clientHeight || canvas.height || 420;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(cssW * dpr);
+      canvas.height = Math.floor(cssH * dpr);
+
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      function safeDiv(num, den, fallback) {
+        return den === 0 ? fallback : (num / den);
+      }
+
+      function toCanvasX(x) {
+        return safeDiv((x - xMin) * cssW, (xMax - xMin), cssW / 2);
+      }
+      function toCanvasY(y) {
+        return safeDiv((yMax - y) * cssH, (yMax - yMin), cssH / 2);
+      }
+
+      function drawAxes() {
+        ctx.strokeStyle = "rgba(0,0,0,0.25)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        if(xMin < 0 && xMax > 0) {
+          const ax = toCanvasX(0);
+          ctx.moveTo(ax, 0); ctx.lineTo(ax, cssH);
+        }
+        if(yMin < 0 && yMax > 0) {
+          const ay = toCanvasY(0);
+          ctx.moveTo(0, ay); ctx.lineTo(cssW, ay);
+        }
+        ctx.stroke();
+      }
+
+      function drawGrid() {
+        ctx.clearRect(0,0,cssW,cssH);
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0,0,cssW,cssH);
+
+        if(grid) {
+          ctx.strokeStyle = "rgba(0,0,0,0.06)";
+          ctx.lineWidth = 1;
+          const step = 40;
+          for(let x=0; x<=cssW; x+=step) {
+            ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,cssH); ctx.stroke();
+          }
+          for(let y=0; y<=cssH; y+=step) {
+            ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(cssW,y); ctx.stroke();
+          }
+        }
+
+        drawAxes();
+      }
+
+      function drawPoint(cx, cy, label) {
+        ctx.fillStyle = "#111827";
+        ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI*2); ctx.fill();
+        if(label) {
+          ctx.fillStyle = "rgba(17,24,39,0.7)";
+          ctx.font = "12px sans-serif";
+          ctx.fillText(label, cx + 8, cy - 8);
+        }
+      }
+
+      function drawParabola(a,b,c) {
+        drawGrid();
+
+        // curve
+        ctx.strokeStyle = "#2563eb";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        let first = true;
+        for(let i=0; i<=samples; i++) {
+          const t = safeDiv(i, samples, 0);
+          const x = xMin + (xMax - xMin) * t;
+          const y = a*x*x + b*x + c;
+          const cx = toCanvasX(x);
+          const cy = toCanvasY(y);
+          if(first) { ctx.moveTo(cx,cy); first=false; }
+          else ctx.lineTo(cx,cy);
+        }
+        ctx.stroke();
+
+        // features
+        if(showVertex || showAxis) {
+          let vx = 0;
+          if(a !== 0) vx = -b/(2*a);
+          const vy = a*vx*vx + b*vx + c;
+          const px = toCanvasX(vx);
+          const py = toCanvasY(vy);
+
+          if(showAxis) {
+            ctx.strokeStyle = "rgba(37,99,235,0.45)";
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(px, 0);
+            ctx.lineTo(px, cssH);
+            ctx.stroke();
+          }
+
+          if(showVertex) {
+            drawPoint(px, py, "V(" + vx.toFixed(2) + ", " + vy.toFixed(2) + ")");
+          }
+        }
+
+        if(showIntercepts) {
+          // y-intercept at x=0
+          const y0 = c;
+          drawPoint(toCanvasX(0), toCanvasY(y0), "y-intercept");
+
+          // x-intercepts: ax^2 + bx + c = 0
+          const d = b*b - 4*a*c;
+          if(a !== 0 && d >= 0) {
+            const sqrtD = Math.sqrt(d);
+            const x1 = (-b + sqrtD) / (2*a);
+            const x2 = (-b - sqrtD) / (2*a);
+            drawPoint(toCanvasX(x1), toCanvasY(0), "x1=" + x1.toFixed(2));
+            drawPoint(toCanvasX(x2), toCanvasY(0), "x2=" + x2.toFixed(2));
+          }
+        }
+      }
+
+      function update() {
+        const a = parseFloat(sa.value);
+        const b = parseFloat(sb.value);
+        const c = parseFloat(sc.value);
+        document.getElementById("valA").textContent = a.toFixed(2);
+        document.getElementById("valB").textContent = b.toFixed(2);
+        document.getElementById("valC").textContent = c.toFixed(2);
+        drawParabola(a,b,c);
+      }
+
+      sa.addEventListener("input", update);
+      sb.addEventListener("input", update);
+      sc.addEventListener("input", update);
+
+      update();
+    })();
+  </script>
+</body>
+</html>

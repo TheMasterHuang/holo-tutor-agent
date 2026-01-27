@@ -1,0 +1,242 @@
+{
+  "spec_version": "1.1",
+  "meta": {
+    "title": "抛物线方程（y=ax²+bx+c）",
+    "date": "2026-01-27",
+    "level": "middle",
+    "watermark": "holo-tutor-agent",
+    "lang": "zh-CN"
+  },
+  "exports": {
+    "html": true,
+    "lecture_docx": true,
+    "quiz_docx": true,
+    "pdf": false,
+    "zip": true,
+    "zip_name": "bundle.zip"
+  },
+  "interactive": {
+    "type": "parabola_quadratic",
+    "domain": { "x_min": -10, "x_max": 10 },
+    "range": { "y_min": -10, "y_max": 10 },
+    "params": {
+      "a": { "min": -5, "max": 5, "step": 0.01, "default": 1.5 },
+      "b": { "min": -10, "max": 10, "step": 0.01, "default": -2 },
+      "c": { "min": -10, "max": 10, "step": 0.01, "default": 1 }
+    },
+    "plot_config": { "samples": 800, "grid": true },
+    "features": { "show_vertex": true, "show_axis": true, "show_intercepts": false }
+  },
+  "sections": [
+    {
+      "id": "part1",
+      "title": "Part 1：定义与图像",
+      "content_md": "二次函数 y = ax² + bx + c（a≠0）的图像是一条抛物线。\n\n- a 控制开口方向与“胖瘦”（|a|越大越窄）\n- b 控制对称轴位置\n- c 控制整体上下平移（y 轴截距）"
+    },
+    {
+      "id": "part2",
+      "title": "Part 2：关键性质与公式",
+      "content_md": "对称轴：x = -b/(2a)\n\n顶点：V(h, k)，其中 h = -b/(2a)，k = (4ac-b²)/(4a)\n\n判别式：Δ = b² - 4ac\n\n- Δ>0：与 x 轴有两个交点\n- Δ=0：与 x 轴相切（一个交点）\n- Δ<0：与 x 轴无交点"
+    },
+    {
+      "id": "part3",
+      "title": "Part 3：配方法（一般式→顶点式）",
+      "content_md": "一般式：y = ax² + bx + c\n\n顶点式：y = a(x-h)² + k\n\n配方法思路：\n\n```text\nax²+bx+c\n= a(x²+(b/a)x)+c\n= a[(x+b/2a)²-(b/2a)²]+c\n= a(x+b/2a)² + (4ac-b²)/(4a)\n```"
+    },
+    {
+      "id": "part4",
+      "title": "Part 4：典型应用",
+      "content_md": "- 已知三点求二次函数：代入得到方程组求 a,b,c\n- 已知顶点与一点求函数：用顶点式 y=a(x-h)²+k\n- 最值问题：当 a>0 取最小值 k；当 a<0 取最大值 k"
+    }
+  ],
+  "lecture_notes": [
+    {
+      "id": "part1",
+      "title": "Part 1（讲稿）：怎么把“图像变化”讲清楚",
+      "content_md": "讲解口径：\n- 先让学生记住“y=ax²”是基本抛物线\n- 再解释 b、c 是“平移”，a 是“伸缩+翻折”\n\n板书建议：\n- y=ax²+bx+c\n- a>0 开口向上；a<0 开口向下\n- y 轴截距：y(0)=c"
+    },
+    {
+      "id": "part2",
+      "title": "Part 2（讲稿）：用对称轴+顶点组织例题",
+      "content_md": "例题顺序：\n1) 给 y=2x²-4x+1，先求对称轴 x=-b/(2a)\n2) 再求顶点坐标 V(h,k)\n3) 最后讨论与 x 轴交点：看 Δ=b²-4ac\n\n易错点提醒：\n- 顶点横坐标 h=-b/(2a)，不是 b/(2a)\n- 讨论交点要看 Δ 的符号"
+    },
+    {
+      "id": "part3",
+      "title": "Part 3（讲稿）：配方法板书模板",
+      "content_md": "板书模板（固定三步）：\n- 提 a：把 x² 的系数变成 1\n- “凑平方”：加上并减去同一个数\n- 写成 a(x-h)²+k\n\n强调：\n- 让括号内成为完全平方\n- k 的值来自“补偿项”"
+    },
+    {
+      "id": "part4",
+      "title": "Part 4（讲稿）：最值与应用题",
+      "content_md": "最值结论：\n- a>0：最小值在顶点处，y_min=k\n- a<0：最大值在顶点处，y_max=k\n\n应用题处理：\n- 先把题意翻译成函数\n- 再看顶点（最值）或看交点（范围）"
+    }
+  ],
+  "quiz_bank": {
+    "single_choice": [
+      {
+        "stem": "当 a>0 时，抛物线 y=ax²+bx+c 的开口方向是？",
+        "options": ["向上", "向下", "向左", "向右"],
+        "answer": "A",
+        "explanation": "a>0 时二次项系数为正，抛物线开口向上。"
+      },
+      {
+        "stem": "抛物线 y=ax²+bx+c 的对称轴方程是？",
+        "options": ["x=b/(2a)", "x=-b/(2a)", "y=-b/(2a)", "y=b/(2a)"],
+        "answer": "B",
+        "explanation": "对称轴恒为 x=-b/(2a)。"
+      },
+      {
+        "stem": "二次函数 y=ax²+bx+c 的 y 轴截距为？",
+        "options": ["a", "b", "c", "a+b+c"],
+        "answer": "C",
+        "explanation": "令 x=0 得 y=c，所以截距为 c。"
+      },
+      {
+        "stem": "判别式 Δ=b²-4ac 的作用是判断？",
+        "options": ["开口方向", "与 x 轴交点个数", "顶点是否存在", "是否为二次函数"],
+        "answer": "B",
+        "explanation": "Δ 的符号决定与 x 轴交点个数：Δ>0 两个，Δ=0 一个，Δ<0 无。"
+      },
+      {
+        "stem": "若 Δ=0，则抛物线与 x 轴的关系是？",
+        "options": ["相交于两点", "相切", "不相交", "重合"],
+        "answer": "B",
+        "explanation": "Δ=0 表示有一个重根，对应与 x 轴相切。"
+      },
+      {
+        "stem": "若 |a| 变大（a≠0），抛物线图像将？",
+        "options": ["变宽", "变窄", "左右平移", "上下平移"],
+        "answer": "B",
+        "explanation": "|a| 越大抛物线越“窄”。"
+      },
+      {
+        "stem": "若 b 发生变化，而 a,c 不变，主要影响抛物线的？",
+        "options": ["对称轴位置", "开口方向", "y 轴截距", "是否为抛物线"],
+        "answer": "A",
+        "explanation": "b 决定对称轴 x=-b/(2a)，因此影响对称轴位置。"
+      },
+      {
+        "stem": "若 c 增大，抛物线整体将？",
+        "options": ["向上平移", "向下平移", "向左平移", "向右平移"],
+        "answer": "A",
+        "explanation": "c 增大等价于 y 增加常数，整体上移。"
+      },
+      {
+        "stem": "二次函数的顶点横坐标 h 等于？",
+        "options": ["b/(2a)", "-b/(2a)", "c/(2a)", "-c/(2a)"],
+        "answer": "B",
+        "explanation": "顶点横坐标 h=-b/(2a)。"
+      },
+      {
+        "stem": "二次函数 y=ax²+bx+c（a>0）的最小值出现在？",
+        "options": ["y 轴上", "x 轴上", "顶点处", "不存在最小值"],
+        "answer": "C",
+        "explanation": "a>0 开口向上，顶点处取得最小值。"
+      }
+    ],
+    "fill_blank": [
+      {
+        "stem": "抛物线 y=ax²+bx+c 的对称轴方程是 x = ____。",
+        "answer": "-b/(2a)",
+        "explanation": "对称轴公式为 x=-b/(2a)。"
+      },
+      {
+        "stem": "判别式 Δ 的表达式是 Δ = ____。",
+        "answer": "b²-4ac",
+        "explanation": "Δ=b²-4ac。"
+      },
+      {
+        "stem": "当 Δ>0 时，抛物线与 x 轴有 ____ 个交点。",
+        "answer": "2",
+        "explanation": "Δ>0 有两个实根，对应两个交点。"
+      },
+      {
+        "stem": "当 Δ=0 时，抛物线与 x 轴 ____（相交/相切/不相交）。",
+        "answer": "相切",
+        "explanation": "Δ=0 有一个重根，对应相切。"
+      },
+      {
+        "stem": "当 Δ<0 时，抛物线与 x 轴 ____ 个交点。",
+        "answer": "0",
+        "explanation": "Δ<0 无实根，对应无交点。"
+      },
+      {
+        "stem": "二次函数的 y 轴截距为 y(0)= ____。",
+        "answer": "c",
+        "explanation": "x=0 代入得 y=c。"
+      },
+      {
+        "stem": "若 a<0，则抛物线开口向 ____。",
+        "answer": "下",
+        "explanation": "a<0 时开口向下。"
+      },
+      {
+        "stem": "顶点横坐标 h= ____。",
+        "answer": "-b/(2a)",
+        "explanation": "h=-b/(2a)。"
+      },
+      {
+        "stem": "顶点纵坐标 k = ____。",
+        "answer": "(4ac-b²)/(4a)",
+        "explanation": "k=(4ac-b²)/(4a)。"
+      },
+      {
+        "stem": "配方法中，将 x²+(b/a)x 配成完全平方可得到 (x+____)²。",
+        "answer": "b/(2a)",
+        "explanation": "x²+(b/a)x=(x+b/2a)²-(b/2a)²。"
+      }
+    ],
+    "true_false": [
+      {
+        "stem": "二次函数 y=ax²+bx+c 的图像一定是抛物线。",
+        "answer": true,
+        "explanation": "当 a≠0 时图像为抛物线。"
+      },
+      {
+        "stem": "当 a=0 时，y=ax²+bx+c 仍然是二次函数。",
+        "answer": false,
+        "explanation": "a=0 时退化为一次函数或常数函数。"
+      },
+      {
+        "stem": "抛物线的对称轴一定经过顶点。",
+        "answer": true,
+        "explanation": "对称轴是顶点的垂直线（在函数图像中）。"
+      },
+      {
+        "stem": "c 的值等于抛物线与 y 轴的交点的 y 坐标。",
+        "answer": true,
+        "explanation": "y(0)=c。"
+      },
+      {
+        "stem": "Δ>0 时，方程 ax²+bx+c=0 没有实数根。",
+        "answer": false,
+        "explanation": "Δ>0 有两个不同实根。"
+      },
+      {
+        "stem": "对称轴公式 x=-b/(2a) 与 c 无关。",
+        "answer": true,
+        "explanation": "对称轴只由 a,b 决定。"
+      },
+      {
+        "stem": "当 |a| 变大时，抛物线会变得更“窄”。",
+        "answer": true,
+        "explanation": "|a| 越大曲线越陡。"
+      },
+      {
+        "stem": "当 a>0 时，二次函数一定有最大值。",
+        "answer": false,
+        "explanation": "a>0 开口向上，只能取得最小值。"
+      },
+      {
+        "stem": "配方法可以把一般式转换为顶点式。",
+        "answer": true,
+        "explanation": "通过凑平方即可得到 a(x-h)²+k。"
+      },
+      {
+        "stem": "抛物线与 x 轴是否相交只由 b 决定。",
+        "answer": false,
+        "explanation": "交点由判别式 Δ=b²-4ac 决定，与 a,b,c 都有关。"
+      }
+    ]
+  }
+}

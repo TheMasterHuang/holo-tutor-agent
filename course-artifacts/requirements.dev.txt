@@ -1,0 +1,5 @@
+# Development requirements (lint/format/test).
+-r requirements.min.txt
+black>=24.0.0
+ruff>=0.5.0
+pytest>=8.0.0
