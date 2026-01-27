@@ -23,25 +23,30 @@ jobs:
 
       - name: Install deps
         run: |
+          cd course-artifacts
           python -m pip install --upgrade pip
-          pip install -r course-artifacts/requirements.min.txt
+          pip install -r requirements.min.txt
 
       - name: Validate spec
         run: |
-          python course-artifacts/scripts/builder.py course-artifacts/data/demo_course_data.json --validate-only
+          cd course-artifacts
+          python scripts/builder.py data/demo_course_data.json --validate-only
 
       - name: Build artifacts
         run: |
-          python course-artifacts/scripts/builder.py course-artifacts/data/demo_course_data.json --outdir ./output
+          cd course-artifacts
+          python scripts/builder.py data/demo_course_data.json --outdir output
 
       - name: Assert outputs exist
         run: |
+          cd course-artifacts
           test -f output/course_interactive.html
           test -f output/manifest.json
           test -f output/bundle.zip
 
       - name: Check zip list
         run: |
+          cd course-artifacts
           python - <<'PY'
           import zipfile
           z=zipfile.ZipFile('output/bundle.zip')
@@ -52,3 +57,9 @@ jobs:
               raise SystemExit(f"zip missing: {missing}")
           print("zip ok:", sorted(list(names))[:20])
           PY
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: course-output
+          path: course-artifacts/output/
