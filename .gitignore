@@ -1,0 +1,12 @@
+﻿# build outputs
+output/
+course-artifacts/**/output/
+course-artifacts/data/output/
+
+# python cache
+__pycache__/
+*.pyc
+
+# artifacts
+*.zip
+*.pdf
