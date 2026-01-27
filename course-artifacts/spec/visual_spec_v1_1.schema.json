@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/visual_spec_v1_1.schema.json",
+  "title": "VisualSpec v1.1",
+  "type": "object",
+  "required": ["spec_version", "meta", "exports", "interactive", "sections", "quiz_bank"],
+  "properties": {
+    "spec_version": {
+      "type": "string",
+      "pattern": "^v?1\\.1(\\.\\d+)?$"
+    },
+    "meta": {
+      "type": "object",
+      "required": ["title", "date"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "date": { "type": "string", "minLength": 1 },
+        "generated_at": { "type": "string" },
+        "level": { "type": "string" },
+        "subject": { "type": "string" },
+        "skill": { "type": "string" },
+        "watermark": { "type": "string" },
+        "lang": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "answer": { "type": "string" },
+    "exports": {
+      "type": "object",
+      "required": ["html", "lecture_docx", "quiz_docx", "pdf", "zip"],
+      "properties": {
+        "html": { "type": "boolean" },
+        "lecture_docx": { "type": "boolean" },
+        "quiz_docx": { "type": "boolean" },
+        "pdf": { "type": "boolean" },
+        "zip": { "type": "boolean" },
+        "docx": { "type": "boolean" },
+        "zip_name": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "interactive": {
+      "type": "object",
+      "required": ["type", "domain", "range", "params"],
+      "properties": {
+        "type": { "type": "string", "minLength": 1 },
+        "domain": {
+          "type": "object",
+          "required": ["x_min", "x_max"],
+          "properties": {
+            "x_min": { "type": "number" },
+            "x_max": { "type": "number" }
+          },
+          "additionalProperties": true
+        },
+        "range": {
+          "type": "object",
+          "required": ["y_min", "y_max"],
+          "properties": {
+            "y_min": { "type": "number" },
+            "y_max": { "type": "number" }
+          },
+          "additionalProperties": true
+        },
+        "params": {
+          "type": "object",
+          "required": ["a", "b", "c"],
+          "properties": {
+            "a": { "$ref": "#/$defs/paramSpec" },
+            "b": { "$ref": "#/$defs/paramSpec" },
+            "c": { "$ref": "#/$defs/paramSpec" }
+          },
+          "additionalProperties": true
+        },
+        "plot_config": {
+          "type": "object",
+          "properties": {
+            "samples": { "type": "integer", "minimum": 10 },
+            "grid": { "type": "boolean" }
+          },
+          "additionalProperties": true
+        },
+        "features": {
+          "type": "object",
+          "properties": {
+            "show_vertex": { "type": "boolean" },
+            "show_axis": { "type": "boolean" },
+            "show_intercepts": { "type": "boolean" }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 4,
+      "items": { "$ref": "#/$defs/contentSection" }
+    },
+    "lecture_notes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/contentSection" }
+    },
+    "quiz_bank": {
+      "type": "object",
+      "required": ["single_choice", "fill_blank", "true_false"],
+      "properties": {
+        "single_choice": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": { "$ref": "#/$defs/singleChoiceQuestion" }
+        },
+        "fill_blank": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": { "$ref": "#/$defs/fillBlankQuestion" }
+        },
+        "true_false": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": { "$ref": "#/$defs/trueFalseQuestion" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "visuals": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "assets": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "paramSpec": {
+      "type": "object",
+      "required": ["min", "max", "step", "default"],
+      "properties": {
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "step": { "type": "number", "exclusiveMinimum": 0 },
+        "default": { "type": "number" }
+      },
+      "additionalProperties": true
+    },
+    "contentSection": {
+      "type": "object",
+      "required": ["id", "title"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "content_md": { "type": "string" },
+        "content": { "type": "string" }
+      },
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "anyOf": [
+            { "required": ["content_md"] },
+            { "required": ["content"] }
+          ]
+        }
+      ]
+    },
+    "singleChoiceQuestion": {
+      "type": "object",
+      "required": ["stem", "options", "answer", "explanation"],
+      "properties": {
+        "stem": { "type": "string", "minLength": 1 },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "answer": { "type": "string", "minLength": 1 },
+        "explanation": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "fillBlankQuestion": {
+      "type": "object",
+      "required": ["stem", "answer", "explanation"],
+      "properties": {
+        "stem": { "type": "string", "minLength": 1 },
+        "answer": { "type": "string", "minLength": 1 },
+        "explanation": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    },
+    "trueFalseQuestion": {
+      "type": "object",
+      "required": ["stem", "answer", "explanation"],
+      "properties": {
+        "stem": { "type": "string", "minLength": 1 },
+        "answer": {
+          "anyOf": [
+            { "type": "boolean" },
+            {
+              "type": "string",
+              "enum": ["true", "false", "True", "False", "T", "F", "正确", "错误"]
+            }
+          ]
+        },
+        "explanation": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": true
+    }
+  }
+}

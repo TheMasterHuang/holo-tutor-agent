@@ -1,0 +1,4 @@
+# Minimal runtime requirements for the VisualSpec builder pipeline.
+jsonschema>=4.0.0
+python-docx>=1.1.0
+reportlab>=3.6.0
