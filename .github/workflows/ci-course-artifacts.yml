@@ -1,0 +1,54 @@
+﻿name: course-artifacts-ci
+
+on:
+  push:
+    paths:
+      - "course-artifacts/**"
+      - ".github/workflows/ci-course-artifacts.yml"
+  pull_request:
+    paths:
+      - "course-artifacts/**"
+      - ".github/workflows/ci-course-artifacts.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r course-artifacts/requirements.min.txt
+
+      - name: Validate spec
+        run: |
+          python course-artifacts/scripts/builder.py course-artifacts/data/demo_course_data.json --validate-only
+
+      - name: Build artifacts
+        run: |
+          python course-artifacts/scripts/builder.py course-artifacts/data/demo_course_data.json --outdir ./output
+
+      - name: Assert outputs exist
+        run: |
+          test -f output/course_interactive.html
+          test -f output/manifest.json
+          test -f output/bundle.zip
+
+      - name: Check zip list
+        run: |
+          python - <<'PY'
+          import zipfile
+          z=zipfile.ZipFile('output/bundle.zip')
+          names=set(z.namelist())
+          required={'manifest.json','course_interactive.html'}
+          missing=required-names
+          if missing:
+              raise SystemExit(f"zip missing: {missing}")
+          print("zip ok:", sorted(list(names))[:20])
+          PY

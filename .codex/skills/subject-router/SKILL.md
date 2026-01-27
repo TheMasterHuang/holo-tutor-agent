@@ -11,21 +11,23 @@ metadata:
 **严禁直接回答学科知识问题。**
 
 ## Routing Table (Skill Mapping)
-1. **语文 (Chinese)** → `chinese-close-reading`
+1. **交互式网页课件 (Visual Course)** → `visual-course-driver`
+   - (Triggers: 可视化, 交互, 网页课, 导出html, 讲稿docx, 习题集, 滑块, 曲线图, HTML, DOCX)
+2. **语文 (Chinese)** → `chinese-close-reading`
    - (Keywords: 赏析, 精读, 阅读理解, 逐句分析)
-2. **英语 (English)** → `english-coach`
+3. **英语 (English)** → `english-coach`
    - (Keywords: 单词, 词根, 翻译, 纠错, 作文)
-3. **历史 (History)** → `history-driver`
+4. **历史 (History)** → `history-driver`
    - (Keywords: 事件, 制度, 根本原因, 评价, 唯物史观)
-4. **地理 (Geography)** → `geo-driver`
+5. **地理 (Geography)** → `geo-driver`
    - (Keywords: 成因, 气候, 地貌, 洋流, 为什么形成)
-5. **化学 (Chemistry)** → `chem-driver`
+6. **化学 (Chemistry)** → `chem-driver`
    - (Keywords: 反应, 离子, 为什么导电, 结构, 博弈)
-6. **生物 (Biology)** → `biology-tutor`
+7. **生物 (Biology)** → `biology-tutor`
    - (Keywords: 细胞, 代谢, 遗传, 结构与功能)
-7. **物理 (Physics)** → `physics-first-principles`
+8. **物理 (Physics)** → `physics-first-principles`
    - (Keywords: 力, 运动, 能量, 状态, 过程, 计算)
-8. **学科本质 (Meta)** → `discipline-architect`
+9. **学科本质 (Meta)** → `discipline-architect`
    - (Keywords: 本质是什么, 学习方法, 架构)
 
 ## Output Protocol
@@ -42,6 +44,14 @@ metadata:
   `{"error": "Out of scope", "message": "抱歉，我只负责全科辅导调度。"}`
 
 ## Examples
+
+User: "能帮我做一个抛物线的可视化网页课件吗？要带滑块的那种"
+Output:
+{
+  "analysis": "用户需要生成包含交互滑块的交互式网页课件。",
+  "target_skill": "visual-course-driver",
+  "suggested_command": "@visual-course-driver 做一个抛物线的可视化网页课件，带滑块"
+}
 
 User: "为什么盐水导电？"
 Output:
