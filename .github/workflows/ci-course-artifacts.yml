@@ -1,4 +1,4 @@
-﻿name: course-artifacts-ci
+name: course-artifacts-ci
 
 on:
   push:
@@ -23,43 +23,45 @@ jobs:
 
       - name: Install deps
         run: |
-          cd course-artifacts
           python -m pip install --upgrade pip
-          pip install -r requirements.min.txt
+          pip install -r course-artifacts/requirements.min.txt
 
       - name: Validate spec
         run: |
-          cd course-artifacts
-          python scripts/builder.py data/demo_course_data.json --validate-only
+          python course-artifacts/scripts/builder.py course-artifacts/data/demo_course_data.json --validate-only
 
       - name: Build artifacts
         run: |
-          cd course-artifacts
-          python scripts/builder.py data/demo_course_data.json --outdir output
+          OUTDIR="$GITHUB_WORKSPACE/output"
+          python course-artifacts/scripts/builder.py course-artifacts/data/demo_course_data.json --outdir "$OUTDIR"
+          echo "=== OUTDIR tree ==="
+          ls -lah "$OUTDIR"
 
       - name: Assert outputs exist
         run: |
-          cd course-artifacts
-          test -f output/course_interactive.html
-          test -f output/manifest.json
-          test -f output/bundle.zip
+          OUTDIR="$GITHUB_WORKSPACE/output"
+          test -f "$OUTDIR/course_interactive.html"
+          test -f "$OUTDIR/manifest.json"
+          test -f "$OUTDIR/bundle.zip"
 
       - name: Check zip list
         run: |
-          cd course-artifacts
           python - <<'PY'
-          import zipfile
-          z=zipfile.ZipFile('output/bundle.zip')
-          names=set(z.namelist())
-          required={'manifest.json','course_interactive.html'}
-          missing=required-names
+          import os, zipfile
+          outdir = os.path.join(os.environ["GITHUB_WORKSPACE"], "output")
+          zpath = os.path.join(outdir, "bundle.zip")
+          z = zipfile.ZipFile(zpath)
+          names = set(z.namelist())
+          required = {"manifest.json", "course_interactive.html"}
+          missing = required - names
           if missing:
               raise SystemExit(f"zip missing: {missing}")
-          print("zip ok:", sorted(list(names))[:20])
+          print("zip ok:", sorted(list(names))[:30])
           PY
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: course-output
-          path: course-artifacts/output/
+          path: output/
+          if-no-files-found: error
